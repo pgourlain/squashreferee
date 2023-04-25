@@ -6,18 +6,20 @@
         "headerLet"
         "counter"
         "footer";
+        grid-template-rows: auto auto 1fr auto;
 }
 
 .servicebutton {
     width: 2.5rem;
     height: 2.5rem;
-    /*border-radius: 50%;*/
+    border-radius: 50%;
     margin: 4px 2px;
+    border: none;
 }
 
 .bignumber {
-    font-size:  12rem;
-    line-height: 10rem;
+    font-size:  14rem;
+    line-height: 12rem;
 }
 .bignumbercontainer {
     display: grid;

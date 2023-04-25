@@ -1,15 +1,15 @@
 .left-player {
     grid-area: maincenterleft;
-    justify-content: center;
+    /* justify-content: center;
     align-items: center;
-    display: grid;
+    display: grid; */
 }
 
 .right-player {
     grid-area: maincenterright;
-    justify-content: center;
+    /* justify-content: center;
     align-items: center;
-    display: grid;
+    display: grid; */
 }
 
 .timer {
@@ -28,6 +28,6 @@
     margin: 4px 2px;
 }
 
-.brounded {
+::deep .brounded {
     border-radius: 50%;
 }
