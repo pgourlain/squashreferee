@@ -1,7 +1,7 @@
 
 
 class undoItem {
-    public void Play(SquashGame game) {
+    public virtual void Play(SquashGame game) {
     }
 }
 
@@ -26,7 +26,7 @@ class pointUndoItem : undoItem {
         this.server = game.Server;
     }
 
-    public void Play(SquashGame game) {
+    public override void Play(SquashGame game) {
         game.Player1.Score = this._scoreP1;
         game.Player1.Scores = this._setP1;
         game.Player2.Score = this._scoreP2;
@@ -46,14 +46,14 @@ class pointUndoItem : undoItem {
 
 class startUndoItem : undoItem {
 
-    public void Play(SquashGame game ) {
+    public override void Play(SquashGame game ) {
         game.Reset();
         game.StartGame();
     }
 }
 
 class tossUndoItem : undoItem {
-    public void Play(SquashGame game) {
+    public override void Play(SquashGame game) {
         game.timer.invalidate();
         game.Status = GameStatus.TossChoice;
         if (game.GameUICallBack != null) {
@@ -72,7 +72,7 @@ class serviceUndoItem : undoItem {
         this.isPrefered = isPrefered;
     }
 
-    public void Play(SquashGame game) {
+    public override void Play(SquashGame game) {
         game.Status = GameStatus.ServiceChoice;
         if (this.isPrefered) {
             game.Undo();

@@ -1,14 +1,30 @@
 ﻿@page "/"
 
 <div class="left-player">
-    <Team PlayerName="Pierrick"></Team>
+    <Team PlayerName="Pierrick" IsRight="false"></Team>
 </div>
 <div class="timer">
     <button type="button" class="button brounded"><span>Start</span><br /><span>Timer</span></button>
 </div>
 
 <div class="right-player">
-    <Team PlayerName="Pierrick"></Team>
+    <Team PlayerName="Pierrick" IsRight="true"></Team>
 </div>
 
 
+@if (IsRight)
+{
+    <div style="grid-area: mainfooter;" class="right">
+        <button class="servicebutton brounded">R</button>
+    </div>
+}
+else
+{
+    <div style="grid-area: mainfooter">
+        <button class="servicebutton brounded">L</button>
+    </div>
+}
+
+@code {
+    bool IsRight { get; set; }
+}

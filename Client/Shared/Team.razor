@@ -1,18 +1,22 @@
 
 <div class="one-team">
-    <div class="playername"><span style="background-color: aliceblue;border-radius:1rem">@PlayerName</span></div>
-    <div class="bignumbercontainer"><span class="bignumber">?</span></div>
-    <div style="grid-area: footer;">
-        <button class="servicebutton brounded">R</button>
-    </div>
+    <div class="playername"><span>@PlayerName</span></div>
+    <div class="bignumbercontainer"><span class="bignumber">9</span></div>
 </div>
 
 
 @code {
+    [Parameter]
+    public string PlayerName { get; set; } = string.Empty;
 
     [Parameter]
-    public string PlayerName {get; set;}
+    public string TeamClass { get; set; } = string.Empty;
 
     [Parameter]
-    public string TeamClass {get;set;} = string.Empty;
+    public bool IsRight { get; set; } = false;
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
 }

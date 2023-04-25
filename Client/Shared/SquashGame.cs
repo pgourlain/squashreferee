@@ -455,19 +455,19 @@ class SquashGame
         }
     }
 
-    private string stringifyReplacer(string key, string value)
-    {
-        switch (key)
-        {
-            case "timer":
-            case "pauseTimer":
-            case "_storage":
-            case "Image":
-                return null;
-            default:
-                return value;
-        }
-    }
+    //private string stringifyReplacer(string key, string value)
+    //{
+    //    switch (key)
+    //    {
+    //        case "timer":
+    //        case "pauseTimer":
+    //        case "_storage":
+    //        case "Image":
+    //            return null;
+    //        default:
+    //            return value;
+    //    }
+    //}
 
     private void saveCurrentState()
     {
@@ -479,7 +479,7 @@ class SquashGame
                 var jsonAsString = System.Text.Json.JsonSerializer.Serialize(that);
                 this._storage.save(this.currentSlot, jsonAsString);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //alert("save exception :" + e);
                 //on iphone exception is thrown                

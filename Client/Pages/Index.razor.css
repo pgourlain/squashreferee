@@ -1,19 +1,15 @@
 .left-player {
     grid-area: maincenterleft;
-    /* justify-content: center;
-    align-items: center;
-    display: grid; */
 }
 
 .right-player {
     grid-area: maincenterright;
-    /* justify-content: center;
-    align-items: center;
-    display: grid; */
 }
 
 .timer {
     grid-area: maincenter;
+    align-items: center;
+    display: grid;
 }
 
 .button {
@@ -30,4 +26,17 @@
 
 ::deep .brounded {
     border-radius: 50%;
+}
+
+.servicebutton {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    margin: 4px 2px;
+    border: none;
+}
+
+.right {
+    display: grid;
+    justify-content: end;
 }
