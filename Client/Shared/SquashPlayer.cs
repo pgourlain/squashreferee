@@ -1,7 +1,7 @@
 
 
 class SquashPlayer {
-    public string Name = string.Empty;
+    public string Name = "?";
     public object? Image = null;
     public int[] Scores = Array.Empty<int>();
     public int Score=0;

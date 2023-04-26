@@ -40,6 +40,7 @@ class SquashGame
         get => _gameUICallBack;
         set => _gameUICallBack = value;
     }
+
     public void Reset()
     {
         this.timer.invalidate();
@@ -61,7 +62,7 @@ class SquashGame
     {
         if (this.Status == GameStatus.NotStarted)
         {
-            this.currentSlot = this._storage.newSlot();
+            this.currentSlot = _storage?.newSlot() ?? string.Empty;
             this.actions.Push(new startUndoItem());
             this._status = GameStatus.TossChoice;
             if (this.GameUICallBack != null)

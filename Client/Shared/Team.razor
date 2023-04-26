@@ -1,7 +1,7 @@
 
 <div class="one-team">
     <div class="playername"><span>@PlayerName</span></div>
-    <div class="bignumbercontainer"><span class="bignumber">9</span></div>
+    <div class="bignumbercontainer"><span class="bignumber" @onclick="OnBigNumberClick">@Number</span></div>
 </div>
 
 
@@ -10,13 +10,21 @@
     public string PlayerName { get; set; } = string.Empty;
 
     [Parameter]
-    public string TeamClass { get; set; } = string.Empty;
-
-    [Parameter]
     public bool IsRight { get; set; } = false;
+
+
+    private string Number = "9";
+
 
     protected override Task OnInitializedAsync()
     {
         return base.OnInitializedAsync();
+    }
+
+    private Task OnBigNumberClick()
+    {
+        Number = (int.Parse(Number) + 1).ToString();
+        return Task.CompletedTask;
+
     }
 }

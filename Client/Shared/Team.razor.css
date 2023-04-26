@@ -12,6 +12,8 @@
 .bignumber {
     font-size: 70vmin;
     line-height: 65vmin;
+    cursor: pointer;
+    user-select: none;
 }
 
 .bignumbercontainer {
@@ -24,7 +26,7 @@
     font-size: 2rem;
     text-align: center;
     background-color: blue;
-    border-radius:2rem;
+    border-radius: 2rem;
     color: white;
 }
 

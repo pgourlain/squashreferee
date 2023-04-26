@@ -40,3 +40,20 @@
     display: grid;
     justify-content: end;
 }
+
+.header {
+    height: auto;
+    display: flex;
+    grid-area: mainheader;
+}
+
+.main {
+    grid-area: main;
+    display: grid;
+    grid-template-areas:
+        'mainheader mainheader mainheader'
+        'maincenterleft maincenter maincenterright'
+        'mainfooter mainfooter mainfooter';
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto 1fr auto;
+}

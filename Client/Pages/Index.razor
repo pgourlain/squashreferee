@@ -1,30 +1,84 @@
 ﻿@page "/"
 
-<div class="left-player">
-    <Team PlayerName="Pierrick" IsRight="false"></Team>
-</div>
-<div class="timer">
-    <button type="button" class="button brounded"><span>Start</span><br /><span>Timer</span></button>
-</div>
-
-<div class="right-player">
-    <Team PlayerName="Pierrick" IsRight="true"></Team>
-</div>
-
-
-@if (IsRight)
-{
-    <div style="grid-area: mainfooter;" class="right">
-        <button class="servicebutton brounded">R</button>
+<div class="main">
+    <div class="header">
+        <span>menu1</span>
+        <span>menu2</span>
     </div>
-}
-else
-{
-    <div style="grid-area: mainfooter">
-        <button class="servicebutton brounded">L</button>
+    <div class="left-player">
+        <Team PlayerName="@game.Player1.Name" IsRight="false"></Team>
     </div>
-}
+    <div class="timer">
+        <span>@game.Status</span>
+        <button type="button" class="button brounded" @onclick="OnTimerClick"><span>Start</span><br /><span>Timer</span></button>        
+    </div>
+
+    <div class="right-player">
+        <Team PlayerName="@game.Player2.Name" IsRight="true"></Team>
+    </div>
+
+
+    @if (IsLeft)
+    {
+        <div style="grid-area: mainfooter">
+            <button class="servicebutton brounded" @onclick="SwitchServiceSide">@ServiceSide</button>
+        </div>
+    }
+    else
+    {
+        <div style="grid-area: mainfooter;" class="right">
+            <button class="servicebutton brounded" @onclick="SwitchServiceSide">@ServiceSide</button>
+        </div>
+    }
+
+</div>
 
 @code {
-    bool IsRight { get; set; }
+
+    private SquashGame game;
+
+    bool IsLeft 
+    { 
+        get
+        {
+            return game.Server == PlayerEnum.PlayerTwo;
+        }
+    }
+
+    string ServiceSide
+    {
+        get
+        {
+            switch(game.ServiceSide)
+            {
+                case PlayerSideEnum.Left : return "L";
+                case PlayerSideEnum.Right: return "R";
+                default: return "?";
+            }
+        }
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        game = new SquashGame(null);
+        return base.OnInitializedAsync();
+    }
+
+    private Task SwitchServiceSide()
+    {
+        game.switchServiceSide();
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
+    private Task OnTimerClick()
+    {
+        if (game.Status == GameStatus.NotStarted)
+        {
+            game.StartGame();
+            StateHasChanged();
+        }
+        return Task.CompletedTask;
+
+    }
 }
