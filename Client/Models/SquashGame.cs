@@ -7,7 +7,7 @@ public class SquashGame
     public int SetsCount = 5;
 
     private GameStatus _status = GameStatus.NotStarted;
-    private SquashGameUI? _gameUICallBack = null;
+    private ISquashGameUI? _gameUICallBack = null;
     /**current storage slot name */
     private string currentSlot = string.Empty;
     public string Sex = "";
@@ -35,7 +35,7 @@ public class SquashGame
         set => _status = value;
     }
 
-    public SquashGameUI? GameUICallBack
+    public ISquashGameUI? GameUICallBack
     {
         get => _gameUICallBack;
         set => _gameUICallBack = value;
