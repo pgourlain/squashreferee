@@ -1,6 +1,6 @@
 
 
-class undoItem {
+public class undoItem {
     public virtual void Play(SquashGame game) {
     }
 }

@@ -1,5 +1,5 @@
 
-class SquashGame
+public class SquashGame
 {
     public SquashPlayer Player1 = new SquashPlayer();
     public SquashPlayer Player2 = new SquashPlayer();

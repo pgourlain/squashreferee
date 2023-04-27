@@ -1,6 +1,6 @@
 
 
-class SquashPlayer {
+public class SquashPlayer {
     public string Name = "?";
     public object? Image = null;
     public int[] Scores = Array.Empty<int>();

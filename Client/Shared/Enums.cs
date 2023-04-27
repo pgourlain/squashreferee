@@ -1,11 +1,11 @@
-enum GameStatus {
+public enum GameStatus {
     NotStarted, TossChoice, ServiceChoice, Playing, MatchEnd
 }
 
-enum PlayerEnum {
+public enum PlayerEnum {
     PlayerOne, PlayerTwo
 }
 
-enum PlayerSideEnum {
+public enum PlayerSideEnum {
     Left, Right, Uknown
 }

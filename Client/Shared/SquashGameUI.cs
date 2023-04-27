@@ -1,4 +1,4 @@
-interface SquashGameUI {
+public interface SquashGameUI {
     void ChooseToss();
     void ChooseServeSide();
     void PlayerWins(PlayerEnum player);

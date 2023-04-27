@@ -1,4 +1,4 @@
-class StorageService
+public class StorageService
 {
     internal string load(string slot)
     {
