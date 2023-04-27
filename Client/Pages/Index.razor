@@ -1,13 +1,17 @@
 ﻿@page "/"
 @page "/index.html"
+@inject IJSRuntime JsRuntime
+
+
+@* /index.html is required for phones : to put url on home screen page *@
 
 <div class="main">
     <div class="header">
-        <span>menu1</span>
-        <span>menu2</span>
+        <button @onclick="onEndMatch"><span>End Match</span></button>
+        <button @onclick="onUndo"><span>Undo</span></button>
     </div>
     <div class="left-player">
-        <Team PlayerName="@game.Player1.Name" IsRight="false" Game="@game"></Team>
+        <Team PlayerName="@game.Player1.Name" IsRight="false" Game="@game" Player="@game.Player1"></Team>
     </div>
     <div class="timer">
         <span>@game.Status</span>
@@ -15,7 +19,7 @@
     </div>
 
     <div class="right-player">
-        <Team PlayerName="@game.Player2.Name" IsRight="true" Game="@game"></Team>
+        <Team PlayerName="@game.Player2.Name" IsRight="true" Game="@game" Player="@game.Player2"></Team>
     </div>
 
 
@@ -43,7 +47,7 @@
     { 
         get
         {
-            return game.Server == PlayerEnum.PlayerTwo;
+            return game.Server == PlayerEnum.PlayerOne;
         }
     }
 
@@ -65,13 +69,14 @@
         game = new SquashGame(null);
         game.GameUICallBack = eventWrapper;
         eventWrapper.OnChooseToss += OnChooseToss;
+        eventWrapper.OnChooseServeSide += OnChooseServeSide;
+        eventWrapper.OnUpdateServiceSide += OnUpdateServiceSide;
         return base.OnInitializedAsync();
     }
 
     private Task SwitchServiceSide()
     {
         game.switchServiceSide();
-        StateHasChanged();
         return Task.CompletedTask;
     }
 
@@ -89,5 +94,31 @@
     private void OnChooseToss(object? sender, EventArgs args)
     {
         //TODO
+    }
+
+    private void OnChooseServeSide(object? sender, EventArgs args)
+    {
+        game.SetPlayerServeOn(PlayerSideEnum.Right, true);
+        StateHasChanged();
+    }
+
+    private void OnUpdateServiceSide(object? sender, EventArgs args)
+    {
+        StateHasChanged();
+    }
+
+    private async Task onEndMatch()
+    {
+        bool confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Are you sure?");
+        if (confirmed)
+        {
+            game.Reset();
+        }
+    }
+
+    private Task onUndo()
+    {
+        game.Undo();
+        return Task.CompletedTask;
     }
 }

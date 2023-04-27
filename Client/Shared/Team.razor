@@ -1,7 +1,7 @@
 
 <div class="one-team">
     <div class="playername"><span>@PlayerName</span></div>
-    <div class="bignumbercontainer"><span class="bignumber" @onclick="OnBigNumberClick">@Number</span></div>
+    <div class="bignumbercontainer"><span class="bignumber" @onclick="OnBigNumberClick">@Player.Score</span></div>
 </div>
 
 
@@ -15,18 +15,28 @@
     [Parameter]
     public SquashGame Game { get; set; } = null;
 
-    private string Number = "9";
+    [Parameter]
+    public SquashPlayer Player { get; set; } = null;
 
+    private PlayerEnum currentPlayer;
 
     protected override Task OnInitializedAsync()
     {
+        currentPlayer = Player == Game.Player1 ? PlayerEnum.PlayerOne : PlayerEnum.PlayerTwo;
         return base.OnInitializedAsync();
     }
 
     private Task OnBigNumberClick()
     {
-        Number = (int.Parse(Number) + 1).ToString();
+        if (Game.Status == GameStatus.TossChoice)
+        {
+            Game.SetPlayerWinToss(currentPlayer);
+        } else if (Game.Status == GameStatus.Playing)
+        {
+            Game.AddPoint(currentPlayer);
+            StateHasChanged();
+        }
+        //TODO
         return Task.CompletedTask;
-
     }
 }

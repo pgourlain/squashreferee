@@ -17,6 +17,8 @@ class SquashGameUIWrapper : ISquashGameUI
 {
     public event EventHandler OnChooseToss;
     public event EventHandler OnChooseServeSide;
+    public event EventHandler OnPlayerWinSet;
+    public event EventHandler OnUpdateServiceSide;
     public SquashGameUIWrapper()
     {
     }
@@ -39,41 +41,38 @@ class SquashGameUIWrapper : ISquashGameUI
 
     public void HideChooseService()
     {
-        throw new NotImplementedException();
+
     }
 
     public void PauseBegin()
     {
-        throw new NotImplementedException();
     }
 
     public void PauseEnd()
     {
-        throw new NotImplementedException();
     }
 
     public void PlayerWins(PlayerEnum player)
     {
-        throw new NotImplementedException();
     }
 
     public void PlayerWinSet(PlayerEnum player)
     {
-        throw new NotImplementedException();
     }
 
     public void UpdateScore(int Score1, int Score2)
     {
-        throw new NotImplementedException();
     }
 
     public void UpdateServiceSide()
     {
-        throw new NotImplementedException();
+        if (OnUpdateServiceSide != null)
+        {
+            OnUpdateServiceSide(this, EventArgs.Empty);
+        }
     }
 
     public void UpdateTime()
     {
-        throw new NotImplementedException();
     }
 }
