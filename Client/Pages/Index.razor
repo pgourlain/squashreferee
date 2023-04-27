@@ -6,15 +6,15 @@
         <span>menu2</span>
     </div>
     <div class="left-player">
-        <Team PlayerName="@game.Player1.Name" IsRight="false"></Team>
+        <Team PlayerName="@game.Player1.Name" IsRight="false" Game="@game"></Team>
     </div>
     <div class="timer">
         <span>@game.Status</span>
-        <button type="button" class="button brounded" @onclick="OnTimerClick"><span>Start</span><br /><span>Timer</span></button>        
+        <button type="button" class="button brounded" @onclick="OnStartClick"><span>Start</span><br /><span>Timer</span></button>        
     </div>
 
     <div class="right-player">
-        <Team PlayerName="@game.Player2.Name" IsRight="true"></Team>
+        <Team PlayerName="@game.Player2.Name" IsRight="true" Game="@game"></Team>
     </div>
 
 
@@ -71,7 +71,7 @@
         return Task.CompletedTask;
     }
 
-    private Task OnTimerClick()
+    private Task OnStartClick()
     {
         if (game.Status == GameStatus.NotStarted)
         {
