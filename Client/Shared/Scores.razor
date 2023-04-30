@@ -1,0 +1,35 @@
+<div class="detailScore">
+    @foreach (var pt in DetailsPoints)
+    {
+        if (pt.Item1 > 0)
+        {
+            <div class="ptLeftContainer">
+                <div class="ptLeftPipe">
+                    <span class="ptLeft">1</span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="ptRightContainer">
+                <div class="ptRightPipe">
+                    <span class="ptRight">1</span>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public SquashGame Game { get; set; } = null;
+
+    [Parameter]
+    public Tuple<int,int>[] DetailsPoints { get; set; } = Array.Empty<Tuple<int,int>>();
+    
+    protected override Task OnInitializedAsync()
+    {
+        //Game.GameUICallBack
+        return base.OnInitializedAsync();
+    }
+}

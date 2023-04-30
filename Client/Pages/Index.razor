@@ -7,23 +7,40 @@
 
 <div class="main">
     <div class="header">
-        <button @onclick="onEndMatch"><span>End Match</span></button>
-        <button @onclick="onUndo"><span>Undo</span></button>
+        <button @onclick="onEndMatch">
+            <span>End Match</span>
+        </button>
+        <button @onclick="onUndo">
+            <span>Undo</span>
+        </button>
     </div>
     <div class="left-player">
-        <Team PlayerName="@game.Player1.Name" IsRight="false" Game="@game" Player="@game.Player1"></Team>
+        <Team IsRight="false" Game="@game" Player="@game.Player1"></Team>
     </div>
     <div class="timer">
-        <span>@game.Status</span>
-        <button type="button" class="button brounded" @onclick="OnStartClick"><span>Start</span><br /><span>Timer</span></button>         
+        <div class="globalScore">
+            @for (int i = 0; i < game.Player1.Scores.Length; i++)
+            {
+                string s = $"{game.Player1.Scores[i]}/{game.Player2.Scores[i]}";
+                <span>@s</span>
+            }
+        </div>
+        <Scores Game="@game" DetailsPoints="@DetailsPoints"></Scores>
+        @if (game.Status == GameStatus.NotStarted)
+        {
+            <button type="button" class="button brounded timercenter" @onclick="OnStartClick">
+                <span>Start</span>
+            </button>
+        }
     </div>
 
     <div class="playingMessage">
-        <span>select server</span>
+        <span>@time</span>
+        <span style="font-size: 2em;">@PlayerMessage</span>
     </div>
 
     <div class="right-player">
-        <Team PlayerName="@game.Player2.Name" IsRight="true" Game="@game" Player="@game.Player2"></Team>
+        <Team IsRight="true" Game="@game" Player="@game.Player2"></Team>
     </div>
 
 
@@ -46,27 +63,33 @@
 
     private SquashGame game;
     private SquashGameUIWrapper eventWrapper = new SquashGameUIWrapper();
-
-    bool IsLeft 
-    { 
-        get
-        {
-            return game.Server == PlayerEnum.PlayerOne;
-        }
+    private Tuple<int,int>[] DetailsPoints { get; set; } = Array.Empty<Tuple<int,int>>();
+    
+    bool IsLeft
+    {
+        get { return game.Server == PlayerEnum.PlayerOne; }
     }
 
     string ServiceSide
     {
         get
         {
-            switch(game.ServiceSide)
+            switch (game.ServiceSide)
             {
-                case PlayerSideEnum.Left : return "L";
-                case PlayerSideEnum.Right: return "R";
-                default: return "?";
+                case PlayerSideEnum.Left:
+                    return "L";
+                case PlayerSideEnum.Right:
+                    return "R";
+                default:
+                    return "?";
             }
         }
     }
+
+    string PlayerMessage { get; set; } = "Waiting to start";
+    string SetScores { get; set; } = string.Empty;
+
+    string time = string.Empty;
 
     protected override Task OnInitializedAsync()
     {
@@ -75,6 +98,11 @@
         eventWrapper.OnChooseToss += OnChooseToss;
         eventWrapper.OnChooseServeSide += OnChooseServeSide;
         eventWrapper.OnUpdateServiceSide += OnUpdateServiceSide;
+        eventWrapper.OnUpdateTime += OnUpdateTime;
+        eventWrapper.OnPlayerWinSet += OnPlayerWinSet;
+        eventWrapper.OnPlayerWins += OnPlayerWins;
+        eventWrapper.OnUpdateScore += OnUpdateScore;
+        eventWrapper.OnUpdatePointDetails += OnUpdatePointDetails;
         return base.OnInitializedAsync();
     }
 
@@ -92,12 +120,11 @@
             StateHasChanged();
         }
         return Task.CompletedTask;
-
     }
 
     private void OnChooseToss(object? sender, EventArgs args)
     {
-        //TODO
+        PlayerMessage = "Select Server";
     }
 
     private void OnChooseServeSide(object? sender, EventArgs args)
@@ -110,6 +137,41 @@
     {
         StateHasChanged();
     }
+
+    private void OnUpdateTime(object? sender, EventArgs args)
+    {
+        if (game.Status == GameStatus.Playing)
+        {
+            PlayerMessage = string.Empty;
+        }
+        time = game.DurationAsString();
+        StateHasChanged();
+    }
+
+    private void OnPlayerWinSet(object? sender, PlayerEnum player)
+    {
+    // var s = $"{game.Player1.Scores.Last()}/{game.Player2.Scores.Last()}";
+    // SetScores += "\r\n"+s;
+    }
+
+    private void OnPlayerWins(object? sender, PlayerEnum player)
+    {
+    }
+
+    private void OnUpdateScore(object? sender, Tuple<int, int> value)
+    {
+        
+    }
+    
+    private void OnUpdatePointDetails(object? sender, Tuple<int, int> value)
+    {
+        var l = new List<Tuple<int, int>>(DetailsPoints);
+        
+        l.Add(value);
+        this.DetailsPoints = l.ToArray();
+        Console.WriteLine("coucou");
+    }
+
 
     private async Task onEndMatch()
     {
@@ -125,4 +187,5 @@
         game.Undo();
         return Task.CompletedTask;
     }
+
 }

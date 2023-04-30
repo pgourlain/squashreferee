@@ -82,6 +82,7 @@ public class SquashGame
             {
                 case PlayerEnum.PlayerOne:
                     this.Player1.Score++;
+                    this.AddDetails(1, 0);
                     if (!this.CheckWinner())
                     {
                         this.CheckServiceChange(which);
@@ -89,6 +90,7 @@ public class SquashGame
                     break;
                 case PlayerEnum.PlayerTwo:
                     this.Player2.Score++;
+                    this.AddDetails(0, 1);
                     if (!this.CheckWinner())
                     {
                         this.CheckServiceChange(which);
@@ -115,6 +117,15 @@ public class SquashGame
             }
         }
     }
+
+    private void AddDetails(int ptLeft, int ptRight)
+    {
+        if (this.GameUICallBack != null)
+        {
+            this.GameUICallBack.UpdatePointDetails(ptLeft, ptRight);
+        }
+    }
+    
     private void CheckServiceChange(PlayerEnum which)
     {
         if (which != this.Server)

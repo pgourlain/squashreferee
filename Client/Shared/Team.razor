@@ -1,14 +1,13 @@
 
 <div class="one-team">
-    <div class="playername"><span>@PlayerName</span></div>
+    <div class="playername playername-@side">
+        <input @bind="CurrentPlayerName" class="playernameEdit"/>
+    </div>
     <div class="bignumbercontainer"><span class="bignumber" @onclick="OnBigNumberClick">@Player.Score</span></div>
 </div>
 
 
 @code {
-    [Parameter]
-    public string PlayerName { get; set; } = string.Empty;
-
     [Parameter]
     public bool IsRight { get; set; } = false;
 
@@ -20,9 +19,18 @@
 
     private PlayerEnum currentPlayer;
 
+    private string CurrentPlayerName
+    {
+        get { return Player.Name; }
+        set { Player.Name = value; }
+    }
+
+    private string side;
+ 
     protected override Task OnInitializedAsync()
     {
         currentPlayer = Player == Game.Player1 ? PlayerEnum.PlayerOne : PlayerEnum.PlayerTwo;
+        side = currentPlayer == PlayerEnum.PlayerOne ? "left" : "right";
         return base.OnInitializedAsync();
     }
 

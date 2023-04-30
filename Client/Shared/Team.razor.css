@@ -29,7 +29,18 @@
     border-radius: 2rem;
     color: white;
 }
+.playername-left {
+    background: blue;
+}
+.playername-right {
+    background: red;
+}
 
+.playernameEdit {
+    background: none;
+    border: none;
+    text-align: center;
+}
 /* Portrait */
 @media only screen and (orientation: portrait) {
     .bignumber {
