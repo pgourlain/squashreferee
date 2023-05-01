@@ -126,6 +126,7 @@
     {
         PlayerMessage = "Select Server";
         DetailsPoints = Array.Empty<Tuple<int, int>>();
+        time = string.Empty;
     }
 
     private void OnChooseServeSide(object? sender, EventArgs args)
@@ -152,8 +153,6 @@
 
     private void OnPlayerWinSet(object? sender, PlayerEnum player)
     {
-    // var s = $"{game.Player1.Scores.Last()}/{game.Player2.Scores.Last()}";
-    // SetScores += "\r\n"+s;
         StateHasChanged();
     }
 
@@ -172,7 +171,6 @@
         
         l.Add(value);
         this.DetailsPoints = l.ToArray();
-        //Console.WriteLine("coucou");
     }
 
 
