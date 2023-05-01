@@ -3,7 +3,7 @@
     <div class="playername playername-@side">
         <input @bind="CurrentPlayerName" class="playernameEdit"/>
     </div>
-    <div class="bignumbercontainer"><span class="bignumber" @onclick="OnBigNumberClick">@Player.Score</span></div>
+    <div class="bignumbercontainer"><span class="bignumber" @onclick="OnBigNumberClick" @ontouchend="OnBigNumberTouch">@Player.Score</span></div>
 </div>
 
 
@@ -34,7 +34,7 @@
         return base.OnInitializedAsync();
     }
 
-    private Task OnBigNumberClick()
+    private Task OnBigNumberTouch()
     {
         if (Game.Status == GameStatus.TossChoice)
         {
@@ -44,7 +44,12 @@
             Game.AddPoint(currentPlayer);
             StateHasChanged();
         }
-        //TODO
-        return Task.CompletedTask;
+    //TODO
+        return Task.CompletedTask;  
+    }
+
+    private Task OnBigNumberClick()
+    {
+        return OnBigNumberTouch();
     }
 }

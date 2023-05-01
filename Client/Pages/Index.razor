@@ -7,10 +7,10 @@
 
 <div class="main">
     <div class="header">
-        <button @onclick="onEndMatch">
+        <button @onclick="onEndMatch" @ontouchend="onEndMatch">
             <span>End Match</span>
         </button>
-        <button @onclick="onUndo">
+        <button @onclick="onUndo" @ontouchend="onUndo">
             <span>Undo</span>
         </button>
     </div>
