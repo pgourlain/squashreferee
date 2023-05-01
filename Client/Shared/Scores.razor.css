@@ -11,7 +11,7 @@
 .ptLeft {
     border-radius: 50%;
     border: orange solid 1px;
-    grid-area: ptleft;
+    width: 100%;
 }
 
 .ptRight {
@@ -40,6 +40,8 @@
 
 .ptLeftPipe {
     border-right: orange solid 1px;
-    display: grid;
+    display: flex;
     text-align: center;
+    justify-items: stretch;
+    align-items: stretch;
 }

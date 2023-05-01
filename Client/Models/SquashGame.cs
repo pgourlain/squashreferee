@@ -82,7 +82,7 @@ public class SquashGame
             {
                 case PlayerEnum.PlayerOne:
                     this.Player1.Score++;
-                    this.AddDetails(1, 0);
+                    this.AddDetails(this.Player1.Score, 0);
                     if (!this.CheckWinner())
                     {
                         this.CheckServiceChange(which);
@@ -90,7 +90,7 @@ public class SquashGame
                     break;
                 case PlayerEnum.PlayerTwo:
                     this.Player2.Score++;
-                    this.AddDetails(0, 1);
+                    this.AddDetails(0, this.Player2.Score);
                     if (!this.CheckWinner())
                     {
                         this.CheckServiceChange(which);

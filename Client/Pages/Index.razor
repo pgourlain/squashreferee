@@ -87,7 +87,6 @@
     }
 
     string PlayerMessage { get; set; } = "Waiting to start";
-    string SetScores { get; set; } = string.Empty;
 
     string time = string.Empty;
 
@@ -129,6 +128,7 @@
 
     private void OnChooseServeSide(object? sender, EventArgs args)
     {
+        PlayerMessage = string.Empty;
         game.SetPlayerServeOn(PlayerSideEnum.Right, true);
         StateHasChanged();
     }
@@ -169,7 +169,7 @@
         
         l.Add(value);
         this.DetailsPoints = l.ToArray();
-        Console.WriteLine("coucou");
+        //Console.WriteLine("coucou");
     }
 
 
