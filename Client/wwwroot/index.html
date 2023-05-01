@@ -22,6 +22,11 @@
 </head>
 
 <body>
+    <script>
+        function isDevice() {
+            return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
+        }
+    </script>
     <div id="app">Loading...</div>
 
     <div id="blazor-error-ui">

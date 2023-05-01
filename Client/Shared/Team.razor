@@ -1,13 +1,17 @@
+@inject IJSRuntime JsRuntime
 
 <div class="one-team">
     <div class="playername playername-@side">
         <input @bind="CurrentPlayerName" class="playernameEdit"/>
     </div>
-    <div class="bignumbercontainer"><span class="bignumber" @onclick="OnBigNumberClick" @ontouchend="OnBigNumberTouch">@Player.Score</span></div>
+    <div class="bignumbercontainer">
+        <span class="bignumber" @onclick="OnBigNumberClick" @ontouchstart="OnBigNumberTap">@Player.Score</span>
+    </div>
 </div>
 
 
 @code {
+
     [Parameter]
     public bool IsRight { get; set; } = false;
 
@@ -18,6 +22,7 @@
     public SquashPlayer Player { get; set; } = null;
 
     private PlayerEnum currentPlayer;
+    private bool mobile;
 
     private string CurrentPlayerName
     {
@@ -26,30 +31,37 @@
     }
 
     private string side;
- 
-    protected override Task OnInitializedAsync()
+
+    protected override async Task OnInitializedAsync()
     {
         currentPlayer = Player == Game.Player1 ? PlayerEnum.PlayerOne : PlayerEnum.PlayerTwo;
         side = currentPlayer == PlayerEnum.PlayerOne ? "left" : "right";
-        return base.OnInitializedAsync();
+        mobile = await JsRuntime.InvokeAsync<bool>("isDevice");
     }
 
-    private Task OnBigNumberTouch()
+    private Task OnBigNumber()
     {
         if (Game.Status == GameStatus.TossChoice)
         {
             Game.SetPlayerWinToss(currentPlayer);
-        } else if (Game.Status == GameStatus.Playing)
+        }
+        else if (Game.Status == GameStatus.Playing)
         {
             Game.AddPoint(currentPlayer);
             StateHasChanged();
         }
-    //TODO
-        return Task.CompletedTask;  
+        return Task.CompletedTask;
+    }
+
+    private Task OnBigNumberTap()
+    {
+        return OnBigNumber();
     }
 
     private Task OnBigNumberClick()
     {
-        return OnBigNumberTouch();
+        if (mobile) return Task.CompletedTask;
+        return OnBigNumber();
     }
+
 }

@@ -7,10 +7,10 @@
 
 <div class="main">
     <div class="header">
-        <button @onclick="onEndMatch" @ontouchend="onEndMatch">
+        <button @onclick="onEndMatchClick" @ontouchstart="onEndMatchTap">
             <span>End Match</span>
         </button>
-        <button @onclick="onUndo" @ontouchend="onUndo">
+        <button @onclick="onUndoClick" @ontouchstart="onUndoTap">
             <span>Undo</span>
         </button>
     </div>
@@ -61,6 +61,7 @@
 
 @code {
 
+    private bool mobile;
     private SquashGame game;
     private SquashGameUIWrapper eventWrapper = new SquashGameUIWrapper();
     private Tuple<int,int>[] DetailsPoints { get; set; } = Array.Empty<Tuple<int,int>>();
@@ -90,7 +91,7 @@
 
     string time = string.Empty;
 
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         game = new SquashGame(null);
         game.GameUICallBack = eventWrapper;
@@ -102,7 +103,7 @@
         eventWrapper.OnPlayerWins += OnPlayerWins;
         eventWrapper.OnUpdateScore += OnUpdateScore;
         eventWrapper.OnUpdatePointDetails += OnUpdatePointDetails;
-        return base.OnInitializedAsync();
+        mobile = await JsRuntime.InvokeAsync<bool>("isDevice");
     }
 
     private Task SwitchServiceSide()
@@ -124,6 +125,7 @@
     private void OnChooseToss(object? sender, EventArgs args)
     {
         PlayerMessage = "Select Server";
+        DetailsPoints = Array.Empty<Tuple<int, int>>();
     }
 
     private void OnChooseServeSide(object? sender, EventArgs args)
@@ -152,6 +154,7 @@
     {
     // var s = $"{game.Player1.Scores.Last()}/{game.Player2.Scores.Last()}";
     // SetScores += "\r\n"+s;
+        StateHasChanged();
     }
 
     private void OnPlayerWins(object? sender, PlayerEnum player)
@@ -179,9 +182,32 @@
         if (confirmed)
         {
             game.Reset();
+            DetailsPoints = Array.Empty<Tuple<int, int>>();
         }
     }
 
+    private Task onEndMatchClick()
+    {
+        if (mobile) return Task.CompletedTask;
+        return onEndMatch();
+    }
+
+    private Task onEndMatchTap()
+    {
+        return onEndMatch();
+    }
+    
+    private Task onUndoClick()
+    {
+        if (mobile) return Task.CompletedTask;
+        return onUndo();
+    }
+
+    private Task onUndoTap()
+    {
+        return onUndo();
+    }
+    
     private Task onUndo()
     {
         game.Undo();
